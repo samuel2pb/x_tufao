@@ -9,7 +9,11 @@ A opção pelo isolamento visa evitar o uso de defensivos agrícolas e estudar o
 O seguinte projeto utiliza o microcontrolador ESP-32 e necessita das seguintes bibliotecas para o seu funcionamento
 
 ```<OneWire.h>```
+
 ```<DallasTemperature.h>```
+
 ```<DFRobot_ESP_EC.h>```
+
 ```<EEPROM.h>```
+
 ```<SimpleDHT.h>```
