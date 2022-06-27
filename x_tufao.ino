@@ -10,6 +10,7 @@
 #define dados 7   /*o pino de dados do sensor está ligado na porta 7 do Arduino */
 #define pinTDS 13 /* o pino de dados do sensor de turbidez */
 #define pinDHT22 12 /* o pino de dados do sensor de temperatura ambiente DHT22 */
+#define pinNivel 8 /* o pino de dados do sensor de nível tipo boia */
 
 OneWire oneWire(dados);   /* Protocolo OneWire */
 DallasTemperature sensors(&oneWire);    /*encaminha referências OneWire para o sensor */
@@ -62,9 +63,16 @@ float read_EC()
    return ecValue;
 }
 
+int read_nivel(){
+  int estado = digitalRead(pinSensor);
+  // Serial.print("Estado sensor : ");
+  // Serial.println(estado);
+}
+
 void setup(void)
 { 
   Serial.begin(115200);
+  pinMode(pinSensor, INPUT); /*Pino do sensor de nível como entrada de sinal*/
   EEPROM.begin(32);
   ec.begin(); 
   sensors.begin();
