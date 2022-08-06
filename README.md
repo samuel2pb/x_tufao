@@ -17,3 +17,11 @@ O seguinte projeto utiliza o microcontrolador ESP-32 e necessita das seguintes b
 ```<EEPROM.h>```
 
 ```<SimpleDHT.h>```
+
+A lib connection, é responsável por realizar os serviços de mensageria que inicialmente utilizam um broker MQTT local baseado no Mosquitto e posteriormente utilizará o Pub/Sub para direcionar os dados para a base analítica.Esta lib utiliza os seguintes recursos até o momento:
+
+```NodeRed e NodeRedDashboard```
+
+```Mosquitto MQTT broker```
+
+
