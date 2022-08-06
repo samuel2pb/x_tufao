@@ -1,6 +1,6 @@
 #include "sensors.h"
 
-_dht22_ get_status;
+dht22 get_status;
 
 void setup(void)
 {
