@@ -1,4 +1,4 @@
-# Estufa hidropônica de precisão: Modelagem de sistema não linear utilizando Controle PID e Redes Neurais 
+# Estufa hidropônica de precisão: Modelagem de sistema não linear utilizando Controle PID e Machine Learning 
 
 Esse projeto de pesquisa tem como objetivo implementar um sistema de controle de parâmetros de análises físico-químicas que possibilite o melhor manejo de um modelo de agricultura de precisão num ambiente isolado (estufa hidropônica). O seguinte trabalho utilizará o controle de múltiplas variáveis, incluindo temperatura e umidade, luminosidade, condutividade, PH, Oxigênio, Dióxido de Carbono e Imagem. Isso será possível por meio da modelagem multivariável utilizando sensores e atuadores controlados via PID e otimizados via Redes Neurais. 
 
