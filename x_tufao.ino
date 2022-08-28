@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include <DFRobot_ESP_EC.h>
 #include <EEPROM.h>
-#include <SimpleDHT.h>
+#include "SimpleDHT.h"
 
 extern "C"
 {
