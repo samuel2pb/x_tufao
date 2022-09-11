@@ -3,8 +3,8 @@
 #define SECRET
 #define THINGNAME "dht22" // change this
 
-const char WIFI_SSID[] = "*********";                                                // change this
-const char WIFI_PASSWORD[] = "*************";                                        // change this
+const char WIFI_SSID[] = "***********";                                                // change this
+const char WIFI_PASSWORD[] = "**********";                                        // change this
 const char AWS_IOT_ENDPOINT[] = "a3e0jhoa9ehxhx-ats.iot.us-east-1.amazonaws.com"; // change this
 
 // Amazon Root CA 1
