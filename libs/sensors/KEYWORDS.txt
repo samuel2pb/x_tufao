@@ -1,7 +1,0 @@
-#Keywords
-
-dht22 KEYWORD1
-dht KEYWORD2
-read_env_temp KEYWORD3
-read_env_humidity KEYWORD4
-pin KEYWORD5
