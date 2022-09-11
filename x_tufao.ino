@@ -48,7 +48,7 @@ void sensors( float &env_temp , float &env_hum, float &water_temp, float &ec_val
   dht22.read2(&env_temp, &env_hum, NULL); /* lê e retorna temperatura e umidade ambiente */
   wts.requestTemperatures(); /* Envia o comando para leitura da temperatura */
   water_temp = wts.getTempCByIndex(0); /* Endereço do sensor */
-  tds.setTemperature(water_temp); // set the temperature and execute temperature compensation
+  tds.setTemperature(water_temp); /* Seta temperatura e efetua compensacao */
   tds.update();
   ec_value = tds.getEcValue();
   state = digitalRead(pinNivel);
@@ -71,15 +71,15 @@ void connectAWS()
     Serial.print(".");
   }
  
-  // Configure WiFiClientSecure to use the AWS IoT device credentials
+  // Configura WiFiClientSecure para usar as credenciais do dispositivo AWS IoT 
   net.setCACert(AWS_CERT_CA);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);
  
-  // Connect to the MQTT broker on the AWS endpoint we defined earlier
+  // Conecta ao broker MQTT no Endpoint da AWS
   client.setServer(AWS_IOT_ENDPOINT, 8883);
  
-  // Create a message handler
+  // Cria o messege handler, objeto responsável por enviar as mensagens ao tópico cadastrado
   client.setCallback(messageHandler);
  
   Serial.println("Connecting to AWS IOT");
@@ -96,7 +96,7 @@ void connectAWS()
     return;
   }
  
-  // Subscribe to a topic
+  // Realiza a assinatura ao tópico especificado
   client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
  
   Serial.println("AWS IoT Connected!");
@@ -105,10 +105,13 @@ void connectAWS()
 void publishMessage()
 {
   StaticJsonDocument<200> doc;
-  doc["humidity"] = env_hum;
-  doc["env_temperature"] = env_temp;
+  doc["env_temperature"] = env_temp ;
+  doc["humidity"] = env_hum ;
+  doc["water_temperature"] = water_temp;
+  doc["ec_value"] = ec_value;
+  doc["water_level"] = state;
   char jsonBuffer[512];
-  serializeJson(doc, jsonBuffer); // print to client
+  serializeJson(doc, jsonBuffer); /* Escreve no Client */
  
   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
 }
@@ -134,10 +137,10 @@ void setup(void)
   EEPROM.begin(32);
   wts.begin();
   tds.setPin(TdsSensorPin);
-  tds.setAref(5.0);      // reference voltage on ADC, default 5.0V on Arduino UNO
-  tds.setAdcRange(1024); // 1024 for 10bit ADC;4096 for 12bit ADC
-  tds.begin();           // initialization
-  connectAWS(); //Connect to Amazon Web Services
+  tds.setAref(5.0);      /* Tensao de referencia ADC, Padrao de 5.0 V para arduino ou 3.3 para ESP32 */
+  tds.setAdcRange(1024); /* Range de 1024 para 10bit ADC; 4096 para 12bit ADC */
+  tds.begin();           /* Inicializa o TDS*/ 
+  connectAWS(); /* Conecta a AWS */
 }
 
 /*-----------------------------------Loop---------------------------------------------*/
@@ -147,17 +150,25 @@ void loop(void)
 
   sensors(env_temp, env_hum, water_temp, ec_value, state);
   
-  if (isnan(env_hum) || isnan(env_temp) )  // Check if any reads failed and exit early (to try again).
+  if (isnan(env_temp) || isnan(env_hum) || isnan(water_temp) || isnan(ec_value) || isnan(state) )  /* Checa se alguma leitura falha, retorna para uma nova leitura */
   {
     Serial.println(F("Failed to read from sensors!"));
     return;
   }
  
-  Serial.print(F("Humidity: "));
-  Serial.print(env_hum);
-  Serial.print(F("%  Temperature: "));
+  Serial.print(F("%  Env_Temperature: "));
   Serial.print(env_temp);
   Serial.println(F("°C "));
+  Serial.print(F("Humidity: "));
+  Serial.print(env_hum);
+  Serial.print(F("%  Water_Temperature: "));
+  Serial.print(water_temp);
+  Serial.println(F("°C "));
+  Serial.print(F("%  EC_Value: "));
+  Serial.print(ec_value);
+  Serial.println(F("uS/cm "));
+  Serial.print(F("%  Water_Level: "));
+  Serial.print(state);
  
   publishMessage();
   client.loop();
