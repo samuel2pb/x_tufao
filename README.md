@@ -4,24 +4,18 @@ Esse projeto de pesquisa tem como objetivo implementar um sistema de controle de
 
 A opção pelo isolamento visa evitar o uso de defensivos agrícolas e estudar os efeitos do cultivo promovido via iluminação artificial, enquanto a opção pelo método hidropônico ocorreu para uma melhor precisão nos processos nutricionais do cultivo como o controle de condutividade, PH e oxigenação da água. O projeto tem ainda como objetivo elaborar um modelo que possa ser escalável e economicamente viável no que tange a eficiência produtiva, hídrica e energética, de modo a oferecer uma alternativa aos métodos convencionais de cultivo.
 
+Os dados são enviados para o broker MQTT da Amazon Web Services (IOT-Core) via TCP/IP e formatados como Json. É a partir de uma estratégia Cloud que serão desenvolvidos as análises, atuações e recalibrações do sistema. A escolha por essa alternativa se deu pelo seu baixo custo e pela escalabilidade oferecida pelos serviços Cloud based.
+
 ## Bibliotecas Utilizadas
 
 O seguinte projeto utiliza o microcontrolador ESP-32 e necessita das seguintes bibliotecas para o seu funcionamento
 
-```<OneWire.h>```
+```<OneWire.h>``` ```<DallasTemperature.h>```
 
-```<DallasTemperature.h>```
+```<GravityTDS.h>``` ```<EEPROM.h>```
 
-```<DFRobot_ESP_EC.h>```
+```<SimpleDHT.h>``` ```<WiFiClientSecure.h>```
 
-```<EEPROM.h>```
+```<PubSubClient.h>``` ```<ArduinoJson.h>```
 
-```<SimpleDHT.h>```
-
-A lib connection, é responsável por realizar os serviços de mensageria que inicialmente utilizam um broker MQTT local baseado no Mosquitto e posteriormente utilizará o Pub/Sub para direcionar os dados para a base analítica.Esta lib utiliza os seguintes recursos até o momento:
-
-```NodeRed e NodeRedDashboard```
-
-```Mosquitto MQTT broker```
-
-
+```<WiFi.h>```
