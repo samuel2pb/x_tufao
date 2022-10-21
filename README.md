@@ -14,7 +14,7 @@ O seguinte projeto utiliza o microcontrolador ESP-32 e necessita das seguintes b
 
 ```<GravityTDS.h>``` ```<EEPROM.h>```
 
-```<SimpleDHT.h>``` ```<WiFiClientSecure.h>```
+```<DHT.h>``` ```<WiFiClientSecure.h>```
 
 ```<PubSubClient.h>``` ```<ArduinoJson.h>```
 
