@@ -6,7 +6,7 @@
 #include <DallasTemperature.h>
 #include <GravityTDS.h>
 #include <EEPROM.h>
-#include <SimpleDHT.h>
+#include <DHT.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 /*------------------------------------- Definitions ----------------------------------------------------*/
@@ -15,6 +15,7 @@
 #define TdsSensorPin A0 /* o pino de dados do sensor de turbidez */
 #define pinNivel 27 /* o pino de dados do sensor de nível tipo boia */
 #define pinDHT22 13 /* o pino de dados do sensor de temperatura ambiente DHT22 */
+#define DHTTYPE DHT22   // Sensor DHT 22  (AM2302)
 
 
 /*------------------------------------- Library Objects --------------------------------------------*/
@@ -22,7 +23,7 @@
 OneWire oneWire(dados);              /* Protocolo OneWire */
 DallasTemperature wts(&oneWire); /*encaminha referências OneWire para o sensor */
 GravityTDS tds;                   /* objeto eletrocondutividade da biblioteca Gravity*/
-SimpleDHT22 dht22(pinDHT22);         /* objeto temperatura e umidade da biblioteca SimpleDHT */
+DHT dht(pinDHT22, DHTTYPE);        /* objeto temperatura e umidade da biblioteca SimpleDHT */
 
 /*------------------------------------- Global Variables ------------------------------------------*/ 
 
@@ -36,8 +37,8 @@ int state = 0;
 
 void sensors( float &env_temp , float &env_hum, float &water_temp, float &ec_value, int &state)
 {
-
-  dht22.read2(&env_temp, &env_hum, NULL); /* lê e retorna temperatura e umidade ambiente */
+  env_hum = dht.readHumidity();
+  env_temp = dht.readTemperature();
   wts.requestTemperatures(); /* Envia o comando para leitura da temperatura */
   water_temp = wts.getTempCByIndex(0); /* Endereço do sensor */
   tds.setTemperature(water_temp); /* Seta temperatura e efetua compensacao */
@@ -61,7 +62,8 @@ void setup(void)
   tds.setPin(TdsSensorPin);
   tds.setAref(5.0);      /* Tensao de referencia ADC, Padrao de 5.0 V para arduino ou 3.3 para ESP32 */
   tds.setAdcRange(1024); /* Range de 1024 para 10bit ADC; 4096 para 12bit ADC */
-  tds.begin();           /* Inicializa o TDS*/ 
+  tds.begin();           /* Inicializa o TDS*/
+  dht.begin();           /* Inicializa o TDS*/
 }
 
 /*-----------------------------------Loop---------------------------------------------*/
