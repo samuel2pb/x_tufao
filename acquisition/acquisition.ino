@@ -9,8 +9,12 @@
 #include <DHT.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#include <SoftwareSerial.h>
+
 /*------------------------------------- Definitions ----------------------------------------------------*/
 
+#define rxPin 10
+#define txPin 11
 #define dados 12    /*o pino de dados do sensor está ligado na porta 7 do Arduino */  
 #define TdsSensorPin A0 /* o pino de dados do sensor de turbidez */
 #define pinNivel 27 /* o pino de dados do sensor de nível tipo boia */
@@ -24,6 +28,7 @@ OneWire oneWire(dados);              /* Protocolo OneWire */
 DallasTemperature wts(&oneWire); /*encaminha referências OneWire para o sensor */
 GravityTDS tds;                   /* objeto eletrocondutividade da biblioteca Gravity*/
 DHT dht(pinDHT22, DHTTYPE);        /* objeto temperatura e umidade da biblioteca SimpleDHT */
+SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
 
 /*------------------------------------- Global Variables ------------------------------------------*/ 
 
@@ -32,6 +37,7 @@ float env_temp = 0;
 float water_temp = 0;
 float ec_value = 0;
 int state = 0;
+String msg; 
 
 /*------------------------------------- Sensors ----------------------------------------------------*/
 
@@ -56,6 +62,8 @@ void sensors( float &env_temp , float &env_hum, float &water_temp, float &ec_val
 
 void setup(void)
 {
+  pinMode(rxPin, INPUT);
+  pinMode(txPin, OUTPUT);
   Serial.begin(115200);
   pinMode(pinNivel, INPUT); /*Pino do sensor de nível como entrada de sinal*/
   wts.begin();
@@ -64,6 +72,7 @@ void setup(void)
   tds.setAdcRange(1024); /* Range de 1024 para 10bit ADC; 4096 para 12bit ADC */
   tds.begin();           /* Inicializa o TDS*/
   dht.begin();           /* Inicializa o TDS*/
+  mySerial.begin(115200);
 }
 
 /*-----------------------------------Loop---------------------------------------------*/
@@ -78,7 +87,7 @@ void loop(void)
     Serial.println(F("Failed to read from sensors!"));
     return;
   }*/  /*Checa se alguma leitura falha, retorna para uma nova leitura */
-  
+  /*
   Serial.print(F("%  Env_Temperature: "));
   Serial.print(env_temp);
   Serial.println(F("°C "));
@@ -92,6 +101,8 @@ void loop(void)
   Serial.println(F("uS/cm "));
   Serial.print(F("%  Water_Level: "));
   Serial.print(state);
- 
+ */
+  msg = String("{" + "env_temperature:" + env_temp + "," + "humidity:" + env_hum + "," + "water_temperature:" + water_temp + "," + "ec_value:" + ec_value + "," + "water_level:" + state + "}")
+  mySerial.print(msg);
   delay(5000);
 }
