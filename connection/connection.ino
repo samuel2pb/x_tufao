@@ -7,17 +7,21 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 #include <WiFi.h>
+#include <HardwareSerial.h>
 
 /*------------------------------------- Definitions ----------------------------------------------------*/
 
 #define AWS_IOT_PUBLISH_TOPIC   "esp_dht/pub" /* Tópico de publicacao na AWS */ 
 #define AWS_IOT_SUBSCRIBE_TOPIC "esp_dht/sub" /* Tópico de assinatura na AWS */
+#define rxPin 16
+#define txPin 17
 
 
 /*------------------------------------- Library Objects --------------------------------------------*/
 
 WiFiClientSecure net = WiFiClientSecure(); /* objeto client secure */
 PubSubClient client(net); /* objeto pubsub */
+HardwareSerial SerialPort(2); // Esta sendo utilizado a UART 2 (pinos 16 e 17 do esp rx tx)
 
 /*------------------------------------- Global Variables ------------------------------------------*/ 
 
@@ -68,18 +72,11 @@ void connectAWS()
   Serial.println("AWS IoT Connected!");
 }
 
-void publishMessage()
+void publishMessage(&doc)
 {
-  StaticJsonDocument<200> doc;
-  doc["env_temperature"] = env_temp ;
-  doc["humidity"] = env_hum ;
-  doc["water_temperature"] = water_temp;
-  doc["ec_value"] = ec_value;
-  doc["water_level"] = state;
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); /* Escreve no Client */
- 
-  client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
 }
  
 void messageHandler(char* topic, byte* payload, unsigned int length)
@@ -98,18 +95,25 @@ void messageHandler(char* topic, byte* payload, unsigned int length)
 
 void setup(void)
 {
-  Serial.begin(115200);
   EEPROM.begin(32);
   connectAWS(); /* Conecta a AWS */
+  SerialPort.begin(115200, SERIAL_8N1, rxPin, txPin);
+  Serial.begin(115200); // Apenas para ser visualizado no monitor do arduino, pode ser retirado
 }
 
 /*-----------------------------------Loop---------------------------------------------*/
 
 void loop(void)
 {
+     
+  if (SerialPort.available()) 
+    {
+    deserializeJson(doc, SerialPort);
+    //String msg = SerialPort.readString();
+    //Serial.print(msg); // Apenas para ser visualizado no monitor do arduino, pode ser retirado
+    }
  
- 
-  publishMessage();
+  publishMessage(doc);
   client.loop();
   delay(5000);
 }
