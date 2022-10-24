@@ -72,7 +72,7 @@ void connectAWS()
   Serial.println("AWS IoT Connected!");
 }
 
-void publishMessage(&doc)
+void publishMessage()
 {
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); /* Escreve no Client */
@@ -95,7 +95,6 @@ void messageHandler(char* topic, byte* payload, unsigned int length)
 
 void setup(void)
 {
-  EEPROM.begin(32);
   connectAWS(); /* Conecta a AWS */
   SerialPort.begin(115200, SERIAL_8N1, rxPin, txPin);
   Serial.begin(115200); // Apenas para ser visualizado no monitor do arduino, pode ser retirado
@@ -105,15 +104,17 @@ void setup(void)
 
 void loop(void)
 {
-     
+
   if (SerialPort.available()) 
     {
-    deserializeJson(doc, SerialPort);
+    Serial.print("Entrou no IF");
+    String jsonBuffer = SerialPort.readString();
+    deserializeJson(doc, jsonBuffer);
     //String msg = SerialPort.readString();
     //Serial.print(msg); // Apenas para ser visualizado no monitor do arduino, pode ser retirado
+    Serial.print(jsonBuffer);
     }
- 
-  publishMessage(doc);
-  client.loop();
+  //publishMessage();
+  //client.loop();
   delay(5000);
 }

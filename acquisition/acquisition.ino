@@ -1,14 +1,11 @@
 
 /*------------------------------------- Libraries ----------------------------------------------------*/
-
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <GravityTDS.h>
-#include <EEPROM.h>
 #include <DHT.h>
-#include <PubSubClient.h>
-#include <ArduinoJson.h>
 #include <SoftwareSerial.h>
 
 /*------------------------------------- Definitions ----------------------------------------------------*/
@@ -22,6 +19,7 @@
 #define DHTTYPE DHT22   // Sensor DHT 22  (AM2302)
 
 
+
 /*------------------------------------- Library Objects --------------------------------------------*/
 
 OneWire oneWire(dados);              /* Protocolo OneWire */
@@ -29,7 +27,6 @@ DallasTemperature wts(&oneWire); /*encaminha referências OneWire para o sensor 
 GravityTDS tds;                   /* objeto eletrocondutividade da biblioteca Gravity*/
 DHT dht(pinDHT22, DHTTYPE);        /* objeto temperatura e umidade da biblioteca SimpleDHT */
 SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
-
 /*------------------------------------- Global Variables ------------------------------------------*/ 
 
 float env_hum = 0;
@@ -37,7 +34,7 @@ float env_temp = 0;
 float water_temp = 0;
 float ec_value = 0;
 int state = 0;
-String msg; 
+//String msg; 
 
 /*------------------------------------- Sensors ----------------------------------------------------*/
 
@@ -102,7 +99,20 @@ void loop(void)
   Serial.print(F("%  Water_Level: "));
   Serial.print(state);
  */
-  msg = String("{" + "env_temperature:" + env_temp + "," + "humidity:" + env_hum + "," + "water_temperature:" + water_temp + "," + "ec_value:" + ec_value + "," + "water_level:" + state + "}")
-  mySerial.print(msg);
-  delay(5000);
+StaticJsonDocument<200> doc;
+doc["env_temperature"] = env_temp;
+doc["humidity"]   = env_hum ;
+doc["water_temperature"] = water_temp ;
+doc["ec_value"] = ec_value;
+doc["water_level"] = state ;
+String jsonBuffer;
+serializeJson(doc, jsonBuffer);
+//serializeJson(doc,  mySerial);
+
+ // msg = String(F("{\"env_temperature\": %.2f, \"humidity\": %.2f, \"water_temperature\": %.2f, \"ec_value\": %.2f , \"water_level\": %d  }") , env_temp, env_hum, water_temp,ec_value, state);
+  //msg = "{" + "env_temperature:" + env_temp + "," + "humidity:" + env_hum + "," + "water_temperature:" + water_temp + "," + "ec_value:" + ec_value + "," + "water_level:" + state + "}";
+ //mySerial.print(msg);
+ mySerial.print(jsonBuffer);
+ Serial.print(jsonBuffer); 
+ delay(5000);
 }
