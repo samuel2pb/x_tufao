@@ -114,7 +114,7 @@ void loop(void)
     //Serial.print(msg); // Apenas para ser visualizado no monitor do arduino, pode ser retirado
     Serial.print(jsonBuffer);
     }
-  //publishMessage();
-  //client.loop();
+  publishMessage();
+  client.loop();
   delay(5000);
 }
