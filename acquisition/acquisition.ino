@@ -2,6 +2,7 @@
 /*------------------------------------- Libraries ----------------------------------------------------*/
 #include <Arduino.h>
 #include <ArduinoJson.h>
+#include <EEPROM.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <GravityTDS.h>
@@ -113,6 +114,7 @@ serializeJson(doc, jsonBuffer);
   //msg = "{" + "env_temperature:" + env_temp + "," + "humidity:" + env_hum + "," + "water_temperature:" + water_temp + "," + "ec_value:" + ec_value + "," + "water_level:" + state + "}";
  //mySerial.print(msg);
  mySerial.print(jsonBuffer);
- Serial.print(jsonBuffer); 
+ Serial.println(jsonBuffer);
+ Serial.println(analogRead(TdsSensorPin)); 
  delay(5000);
 }
