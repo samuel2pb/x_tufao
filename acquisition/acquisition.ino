@@ -116,5 +116,5 @@ serializeJson(doc, jsonBuffer);
  mySerial.print(jsonBuffer);
  Serial.println(jsonBuffer);
  Serial.println(analogRead(TdsSensorPin)); 
- delay(5000);
+ delay(10000);
 }

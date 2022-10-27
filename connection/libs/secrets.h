@@ -3,8 +3,8 @@
 #define SECRET
 #define THINGNAME "dht22" // change this
 
-const char WIFI_SSID[] = "***********";                                                // change this
-const char WIFI_PASSWORD[] = "**********";                                        // change this
+const char WIFI_SSID[] = "Samuel-Ap";                                                // change this
+const char WIFI_PASSWORD[] = "EAEAB9C85D";                                        // change this
 const char AWS_IOT_ENDPOINT[] = "a3e0jhoa9ehxhx-ats.iot.us-east-1.amazonaws.com"; // change this
 
 // Amazon Root CA 1
@@ -58,6 +58,30 @@ CUXi0N80aYlRX/iXlItvPre1tRTWqzuXp6JaRYrBej06kXfR+JvozCC6DRTQ
 // Device Private Key                                               //change this
 static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
 -----BEGIN RSA PRIVATE KEY-----
-
+MIIEowIBAAKCAQEApmlj3Jh5/1eJUhHSi/qYsjWN+1JchEq2z9GL72pxq1rAnA20
+NB2K2jDC7+R+sO2Xg2h5U0xcbC2sLNo4lZiigh9KSVdZWGOx1412PxRUUTfzktEG
+mIFUMEr9b7rGwRNu2Hul8wvAxzLB5BUYBTpVjlXBZYve/07YpuL1FkozfIj5/ZYi
+WBD6PFZSEmBnEYbh2Q1Kwrr42icX/FQRA7+xEXXmGnIspO423Gz6yOGgaV1Gsc/d
+bcAzoL2SzTT/d57NjFmVZBC7xxzIkcwwRaD2jJO/p7Po4NI3sH3sdIDNeLRv90Fd
+h5l3b1PJGzvYLt2Z0mCQA0/7wy+XANx8I7cicwIDAQABAoIBADOsOgP/nLI6/jrr
+qdMpZ0y+8G1/r5aslIOHb8pR5SXuMizC3JfqLHl/9qgC7YwG2qtFP5cr+O7mZ7Yt
+tLBPCvcYvDp10xptKoXiOTtxFpV5qDqIiWHFltzADF4rQxgk7qBuFKOZnKy+CBLI
+sgK9kF94JWtguUfRtdhsVOos9DvQ1H658inMCiE44SvjNmW1h4SnVnWHV7zeeaBu
+R4X3ORp8+UyaLmbaR7ZBDB8ha8mYjuMGIpyKmCx5QSfcDr0yVKicEWpvTz0kYUNz
+jhzVGu5hlYFk0O8qK500ckoUyvnY44ZwBKMAYjGnBf1GIJjL4eIDx2hIV69wAdWL
+NV5efXECgYEA1WQPctNbvbshoI4xHaApbshykqW4G8X3kDAEOiUpyUyZM+X9A4uX
+6aauHsfwJQjCAQoDcYeqyoQUai1LwCMaF+jM44rCJnKTSndMuhVW3gfzW6sEfL2l
+xTzuqXaaV/VSNEO2O/vdh8DGGdXHGwPhN5J4ABCCA0HHHoceHb5hbf0CgYEAx6Pi
+6O+iV6LbWKrzdBojI5VCvzKM5iI428URKsYlZyGMqm+W6YhVScGfu2tsxzIoSUIw
+1qST55OMLetZjYK/nDc6WMCD+fAuCC6diHMfmqAYLWdB+Tu3MWvimNR/t/ojpM1J
+oHa2gwqyuWgsyKd+xyqgqcL0NsDdXyuo8kPGBS8CgYEAncpwtfreUszmT7/1R6/g
+E2A7gH70Re08Y61t4sUKQiTXAI5nalC103uCM5aq1+fC9Vu/MhscysWiBuVZp0kN
+iXKG1xcK+70rdxwCa3NOGb6NUFKEbe0agF/PJxZhiPsJf0Y2oeJbbH+6vO3cXfif
+eCVhgMK0MM5Z/BPzzBC0IM0CgYA4zMIEcBmKQYWSxqCZic4xk4f4ChPYbigrLvhh
+aRq/KuZwn2saanWJlJMzqa67ReP8Y96tUwnZuzsI3YsPHgISGgx5r9xcwh72qPyd
+E9QMFDyMvnIgzQKkBwPjY6Iq3/pAK0AlbWEkC2kqIx+Kv0zssY4gfp0o7tqM90kM
+FIhEdQKBgBRIbFR5sMhOxFJgdXWn03QPvX48XrWx5ixW5UzOzM/zZ6LtbWGQzZFs
+GzRFGvy050PYG40SfzXy9OBt5hgAshwOR9VFFdwaMNTNZ/OcnVQT/YnLpaLfx3JU
+80BwogC3JDEdk/lh7lsfl+75W82mXlKm+BM1OjMtaWIBCuFOeS1W
 -----END RSA PRIVATE KEY----- 
 )KEY";

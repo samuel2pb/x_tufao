@@ -104,15 +104,23 @@ void setup(void)
 
 void loop(void)
 {
+  float env_temp, env_hum, water_temp, ec_value, state;
 
   if (SerialPort.available()) 
     {
     Serial.print("Entrou no IF");
     String jsonBuffer = SerialPort.readString();
     deserializeJson(doc, jsonBuffer);
+    
+    env_temp = doc["env_temperature"];
+    env_hum = doc["humidity"];
+    water_temp = doc["water_temperature"];
+    ec_value = doc["ec_value"];
+    state = doc["water_level"];
+    
     //String msg = SerialPort.readString();
     //Serial.print(msg); // Apenas para ser visualizado no monitor do arduino, pode ser retirado
-    Serial.print(jsonBuffer);
+    Serial.println(jsonBuffer);
     }
   publishMessage();
   client.loop();
